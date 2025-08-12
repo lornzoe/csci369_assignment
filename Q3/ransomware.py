@@ -12,7 +12,6 @@ def run_cmd(cmd):
 
 def main():
     # 1. Generate 16-byte symmetric key in base64 and save to key.txt
-    print("Generating symmetric key...")
     key = run_cmd("openssl rand -base64 16")
     with open("key.txt", "w") as f:
         f.write(key + "\n")
