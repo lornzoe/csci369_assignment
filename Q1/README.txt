@@ -2,13 +2,11 @@ Q1 - ARP Spoofer
 ----------------
 This program performs an ARP spoofing attack.
 
-Before usage, ensure IP forwarding is enabled on the Kali VM.
-	echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
-
 Requirements:
 - Kali VM (as attacker)
 	- Python installed
 	- Scapy installed
+	- sudo/root privileges (required for sending raw packets)
 - Metasploitable2 (as victim)
 
 Usage:

