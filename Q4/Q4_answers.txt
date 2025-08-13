@@ -12,7 +12,7 @@ Answer for a) :
 Answer for b) :
 	The full netcat command used is `echo "1036750" | nc -u -w1 10.0.2.5 12430` .
 	The -u option tells netcat to use UDP, -w1 option sets a 1-second timeout waiting for a response (1s is enough, all the VMs are all running within the same host).
-	The response we get is:
+	The response I get is:
 		Your client ID, 1036750, has been transformed into a secret! Here is your voucher code: 0a901fb6acabbac7b1f77cc2b0dcb77b
 
 
@@ -29,8 +29,14 @@ Answer for c) :
 	
 	With combinations.txt generated, I used Hashcat to find the combination of A||ClientID||B with the command:
 		hashcat -m 0 0a901fb6acabbac7b1f77cc2b0dcb77b combinations.txt
-	The -m option configures the mode, 0 sets the algorithm to MD5.
+	The -m option configures the mode, 0 sets the algorithm to MD5. 0a901fb6acabbac7b1f77cc2b0dcb77b is the hash target (the voucher code), and combinations.txt is a list of all possible combinations of A||ClientID||B.
+	The orignal value of A||Client||B is iz1036750`* .
 
+	For the voucher code 0a901fb6acabbac7b1f77cc2b0dcb77b :
+		The two alphabet characters of A is: iz
+		The two symbol characters of B is: `*
+	
+	
 	
 
 	
