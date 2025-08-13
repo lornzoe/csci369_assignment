@@ -1,0 +1,36 @@
+Q4 - Gift Voucher code cracking
+-------------------------------
+
+Answer for a) :
+	`chmod +x executable_server` to make the file executable on the Ubuntu VM.
+	On the Kali VM, use the nmap tool to identify the open port.
+	Use the -sU option (scan UDP, since this service is UDP-based).
+	The full command used is `nmap -sU -p12345-12500 10.0.2.5` (10.0.2.5 is my Ubuntu VM's IP, where the server is running at).
+	After executing the command, port 12430 is the open port that is used by the voucher service.
+
+
+Answer for b) :
+	The full netcat command used is `echo "1036750" | nc -u -w1 10.0.2.5 12430` .
+	The -u option tells netcat to use UDP, -w1 option sets a 1-second timeout waiting for a response (1s is enough, all the VMs are all running within the same host).
+	The response we get is:
+		Your client ID, 1036750, has been transformed into a secret! Here is your voucher code: 0a901fb6acabbac7b1f77cc2b0dcb77b
+
+
+Answer for c) :
+	With the crunch command, I generated all the 2-letter combinations for A into a text file, A.txt.
+	Full command used to generate A.txt is `crunch 2 2 abcdefghijklmnopqrstuvwxyz -o A.txt`
+	A similar command was used to generate B.txt, changing the charset to use:
+		! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+	These are special symbol characters that I pulled from the ASCII charset.	
+	Full command used to generate B.txt is `crunch 2 2 '!\"#$%&'\''()*+,-./:;<=>?@[\]^_`{|}~' -o B.txt` 
+	With A.txt and B.txt, I made a combinations.txt that listed all possible combinations of A||ClientID||B.
+	While it could be done manually, I generated the combinations.txt file with the awk command:
+		awk -v id="1036750" 'NR==FNR{a[NR]=$0; ac=NR; next} {for (i=1; i<=ac; i++) print a[i] id $0}' A.txt B.txt > combinations.txt
+	
+	With combinations.txt generated, I used Hashcat to find the combination of A||ClientID||B with the command:
+		hashcat -m 0 0a901fb6acabbac7b1f77cc2b0dcb77b combinations.txt
+	The -m option configures the mode, 0 sets the algorithm to MD5.
+
+	
+
+	
